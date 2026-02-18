@@ -41,35 +41,74 @@ export default function SalesPage() {
     }
   }
 
+  // --- THE NEW PAYMENT LOGIC ---
   const handleSaveContract = async () => {
     setLoading(true)
+    
+    // 1. Check Login
     const { data: { user } } = await supabase.auth.getUser()
-
     if (!user) {
         alert('You must be logged in to save a contract.')
         router.push('/login')
         return
     }
 
+    // 2. Save Contract to Database
     const { error } = await supabase.from('contracts').insert({
         client_name: clientName,
         client_email: clientEmail,
         plan_tier: selectedTier,
         monthly_price: totalPrice,
-        addons: selectedAddons,
+        addons: selectedAddons, // Supabase stores arrays automatically as JSON
         status: 'draft',
         user_id: user.id
     })
 
     if (error) {
         alert('Error saving contract: ' + error.message)
-    } else {
-        alert('Contract Saved Successfully!')
-        // Optional: Redirect to dashboard or clear form
-        setClientName('')
-        setClientEmail('')
-        setSelectedAddons([])
+        setLoading(false)
+        return
     }
+
+    // 3. Generate Stripe Payment Link
+    try {
+        const response = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                planName: selectedTier,
+                price: totalPrice,
+                clientName: clientName,
+                clientEmail: clientEmail,
+            }),
+        })
+
+        const data = await response.json()
+
+        if (data.url) {
+            // Success! Ask the user what to do.
+            const shouldOpen = confirm("Contract Saved! \n\nDo you want to open the Payment Link now?")
+            if (shouldOpen) {
+                window.location.href = data.url // Go to Stripe
+            } else {
+                // Reset form for next client
+                setClientName('')
+                setClientEmail('')
+                setSelectedAddons([])
+                alert("Saved to dashboard.")
+            }
+        } else {
+            console.error("Stripe Error:", data.error)
+            alert("Contract saved, but could not generate payment link.")
+        }
+
+    } catch (err) {
+        console.error("API Error:", err)
+        alert("System error connecting to payments.")
+    }
+
     setLoading(false)
   }
 
@@ -167,7 +206,7 @@ export default function SalesPage() {
                 disabled={loading}
                 className="w-full rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
-                {loading ? 'Saving Deal...' : 'Save Contract Draft'}
+                {loading ? 'Processing...' : 'Save & Create Payment Link'}
               </button>
             </div>
 
