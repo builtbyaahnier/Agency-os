@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-// Read from the environment file (Secure)
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
-
 export async function POST(request: Request) {
   try {
+    // 👇 MOVED THIS INSIDE! Now it only runs when the button is clicked.
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+
     const body = await request.json();
     const { planName, price, clientName, clientEmail } = body;
 
