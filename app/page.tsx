@@ -1,114 +1,77 @@
 import Link from 'next/link'
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="bg-white">
-      {/* Navigation */}
-      <header className="absolute inset-x-0 top-0 z-50">
-        <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-          <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="text-xl font-bold tracking-tight text-indigo-600">AGENCY OS</span>
-            </a>
-          </div>
-          <div className="flex flex-1 justify-end">
-            <Link href="/login" className="text-sm font-semibold leading-6 text-gray-900">
-              Client Login <span aria-hidden="true">&rarr;</span>
-            </Link>
-          </div>
-        </nav>
-      </header>
+    <div className="min-h-screen bg-[#020617] text-white selection:bg-indigo-500/30 overflow-hidden relative font-sans">
+      
+      {/* 🌌 BACKGROUND GLOW EFFECTS */}
+      <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-indigo-600/20 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-blue-600/10 blur-[150px] pointer-events-none" />
 
-      {/* Hero Section */}
-      <div className="relative isolate px-6 pt-14 lg:px-8">
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Websites that fill seats.
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              We build high-performance digital experiences for local restaurants. 
-              From online menus to automated marketing, we handle the tech so you can handle the food.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Link
-                href="/login"
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Get Started
-              </Link>
-              <a href="#features" className="text-sm font-semibold leading-6 text-gray-900">
-                Learn more <span aria-hidden="true">→</span>
-              </a>
+      {/* 🧭 NAVIGATION */}
+      <nav className="relative z-10 flex items-center justify-between px-6 md:px-12 py-6 max-w-7xl mx-auto">
+        <div className="text-2xl font-black tracking-tighter flex items-center gap-2">
+          <span className="bg-indigo-600 text-white w-8 h-8 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-600/30">A</span>
+          Agency OS
+        </div>
+        <div className="flex items-center gap-6">
+          <Link href="/login" className="text-sm font-bold text-gray-400 hover:text-white transition hidden md:block">
+            Client Login
+          </Link>
+          <Link href="#contact" className="px-6 py-2.5 text-sm font-bold bg-white text-black rounded-full hover:bg-gray-200 transition shadow-lg shadow-white/10 hover:scale-105 duration-200">
+            Get Started
+          </Link>
+        </div>
+      </nav>
+
+      {/* 🦸‍♂️ HERO SECTION */}
+      <main className="relative z-10 flex flex-col items-center justify-center px-6 pt-20 md:pt-32 pb-32 max-w-5xl mx-auto text-center">
+        
+        {/* AVAILABILITY BADGE */}
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-indigo-300 text-xs font-bold uppercase tracking-widest mb-8 shadow-sm backdrop-blur-md">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+          </span>
+          Accepting New Clients
+        </div>
+
+        {/* HEADLINE */}
+        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-6 bg-gradient-to-b from-white via-white to-gray-500 bg-clip-text text-transparent leading-[1.1]">
+          Websites that <br className="hidden md:block" />
+          <span className="bg-gradient-to-r from-indigo-400 to-blue-500 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(79,70,229,0.3)]">
+            fill seats.
+          </span>
+        </h1>
+
+        <p className="text-lg md:text-xl text-gray-400 max-w-2xl mb-16 leading-relaxed font-medium">
+          We design, build, and manage high-converting digital storefronts for businesses that want more traffic, more bookings, and zero technical headaches. 
+        </p>
+
+        {/* 🎬 FOUNDER VIDEO STAGE (PLACEHOLDER) */}
+        <div className="w-full max-w-4xl mx-auto relative group mt-4 cursor-pointer">
+          {/* Glowing border effect */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500 rounded-[2.5rem] blur opacity-25 group-hover:opacity-60 transition duration-1000 group-hover:duration-300"></div>
+          
+          <div className="relative aspect-video bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-[2rem] overflow-hidden flex flex-col items-center justify-center hover:bg-gray-900 transition-colors shadow-2xl">
+            
+            {/* The Stage Elements */}
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+            
+            {/* Play Button */}
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-indigo-600 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(79,70,229,0.5)] group-hover:scale-110 transition-transform duration-300 mb-6 z-10 border border-indigo-400/30">
+              <div className="w-0 h-0 border-t-[12px] md:border-t-[16px] border-t-transparent border-l-[20px] md:border-l-[26px] border-l-white border-b-[12px] md:border-b-[16px] border-b-transparent ml-2"></div>
             </div>
+            
+            <h3 className="text-2xl md:text-3xl font-black text-white mb-2 z-10 tracking-tight">Our Story</h3>
+            <p className="text-gray-400 text-sm md:text-base max-w-md text-center z-10 px-4">Meet the founders. Learn how we started, our journey, and why we are obsessed with building tools that grow local businesses.</p>
+            
+            {/* Fake Video UI */}
+            <div className="absolute bottom-6 right-6 bg-black/60 backdrop-blur-md px-3 py-1 rounded-md text-xs font-bold text-gray-300 border border-white/5">00:00 / --:--</div>
           </div>
         </div>
-      </div>
 
-      {/* Feature Section */}
-      <div id="features" className="bg-gray-900 py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-indigo-400">Deploy Faster</h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Everything a restaurant needs to grow.
-            </p>
-          </div>
-          <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-            <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-              
-              <div className="relative pl-16">
-                <dt className="text-base font-semibold leading-7 text-white">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500">
-                    ⚡
-                  </div>
-                  Lightning Fast Menus
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-gray-400">
-                  QR code ready, mobile-optimized digital menus that load instantly. Update prices in seconds.
-                </dd>
-              </div>
-
-              <div className="relative pl-16">
-                <dt className="text-base font-semibold leading-7 text-white">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500">
-                    📸
-                  </div>
-                  Professional Photography
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-gray-400">
-                  Monthly photoshoots to keep your Instagram feed fresh and your customers hungry.
-                </dd>
-              </div>
-
-               <div className="relative pl-16">
-                <dt className="text-base font-semibold leading-7 text-white">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500">
-                    🎫
-                  </div>
-                  24/7 Support
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-gray-400">
-                  Need a change? Submit a ticket through our Client Portal and we handle it same-day.
-                </dd>
-              </div>
-
-               <div className="relative pl-16">
-                <dt className="text-base font-semibold leading-7 text-white">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500">
-                    📈
-                  </div>
-                  Growth Analytics
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-gray-400">
-                  Track menu views, reservation clicks, and social media growth from one dashboard.
-                </dd>
-              </div>
-
-            </dl>
-          </div>
-        </div>
-      </div>
+      </main>
     </div>
   )
 }
