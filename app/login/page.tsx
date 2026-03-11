@@ -3,8 +3,11 @@ import { useState, Suspense } from 'react'
 import { supabase } from '@/lib/supabaseClient'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-// ⚠️ CHANGE THIS TO YOUR ACTUAL ADMIN EMAIL!
-const ADMIN_EMAIL = "builtbyaahnier@gmail.com" 
+// ⚠️ THE VIP BOUNCER LIST
+const ADMIN_EMAILS = [
+  "builtbyaahnier@gmail.com",
+  "jacobpro99@gmail.com",
+]
 
 function LoginForm() {
   const [email, setEmail] = useState('')
@@ -15,12 +18,14 @@ function LoginForm() {
   
   const nextUrl = searchParams.get('next')
 
-// 🧠 THE UNIVERSAL TRAFFIC DIRECTOR
+  // 🧠 THE UNIVERSAL TRAFFIC DIRECTOR
   const routeUser = async (user: any) => {
       if (!user) return;
 
-      // 1. Is it the Admin? (Now bulletproof against capital letters/spaces!)
-      if (user.email?.toLowerCase().trim() === ADMIN_EMAIL.toLowerCase().trim()) {
+      const userEmail = user.email?.toLowerCase().trim() || '';
+
+      // 1. Is it the Admin? (Checks the whole VIP Array now!)
+      if (ADMIN_EMAILS.includes(userEmail)) {
           return router.replace('/dashboard')
       }
 

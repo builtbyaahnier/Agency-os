@@ -28,7 +28,10 @@ export default function AdminDashboard() {
   const router = useRouter()
   
   // 🛑 THE VIP BOUNCER LIST
-  const ADMIN_EMAIL = "builtbyaahnier@gmail.com" 
+  const ADMIN_EMAILS = [
+    "builtbyaahnier@gmail.com",
+    "jacobpro99@gmail.com",
+  ]
 
   const [sites, setSites] = useState<ClientSite[]>([])
   const [tickets, setTickets] = useState<SupportTicket[]>([]) 
@@ -36,7 +39,7 @@ export default function AdminDashboard() {
   const [showModal, setShowModal] = useState(false)
   const [newClientName, setNewClientName] = useState('')
   const [isCreating, setIsCreating] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('') // 👈 Added search state!
+  const [searchQuery, setSearchQuery] = useState('') 
   
   const [activeTab, setActiveTab] = useState<'dashboard' | 'tickets' | 'billing' | 'settings'>('dashboard')
   const [selectedTicketClient, setSelectedTicketClient] = useState<string | null>(null)
@@ -50,7 +53,10 @@ export default function AdminDashboard() {
     const bootDashboard = async () => {
       const { data: { session } } = await supabase.auth.getSession()
       
-      if (!session || session.user.email !== ADMIN_EMAIL) {
+      const userEmail = session?.user?.email?.toLowerCase().trim() || '';
+      
+      // 🛡️ THE FIX: Checking the array of Admin Emails!
+      if (!session || !ADMIN_EMAILS.includes(userEmail)) {
           window.location.replace('/login')
           return;
       }
@@ -60,12 +66,13 @@ export default function AdminDashboard() {
     }
 
     bootDashboard()
+    
     // 3. Check if we were sent here from a specific client page!
-      const params = new URLSearchParams(window.location.search)
-      if (params.get('tab') === 'tickets') {
-          setActiveTab('tickets')
-          if (params.get('client')) setSelectedTicketClient(params.get('client'))
-      }
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('tab') === 'tickets') {
+        setActiveTab('tickets')
+        if (params.get('client')) setSelectedTicketClient(params.get('client'))
+    }
   }, [])
 
   const fetchSites = async () => {
@@ -114,7 +121,7 @@ export default function AdminDashboard() {
       is_active: true,
       page_blocks: [], 
       pages: defaultPages,
-      plan_tier: 'Starter', // 👈 Added default tier
+      plan_tier: 'Starter', 
       created_at: new Date().toISOString()
     }]).select() 
 
